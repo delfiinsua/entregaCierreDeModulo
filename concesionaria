@@ -1,0 +1,83 @@
+const autos = require ("./autos");
+
+let concesionaria = {
+    patente: this.patente,
+    vendido: this.vendido,
+    autos: autos,
+
+    
+ 
+   buscarAuto: function (patente){
+      for (let i = 0; i < this.autos.length; i++ ){ 
+         if (autos[i].patente === patente){
+         return autos[i]
+         }
+      }
+         return null
+      },
+    
+
+   venderAuto: function (patente){
+      if (this.buscarAuto (patente) !== null){
+         this.buscarAuto (patente).vendido = true
+      }
+
+   },
+
+   autosParaLaVenta: function (){
+      let filtrados = this.autos.filter (function (auto){
+         if (auto.vendido != true){
+           return autos
+         }
+      })
+      return filtrados
+   },
+
+   
+   autosNuevos: function (){
+      let autos0km =this.autosParaLaVenta ()
+      let ceroKm = autos0km.filter (function (autos0km){
+        return (autos0km.km < 100)
+      })
+      return ceroKm;
+    },
+
+   listaDeVentas: function (){
+      let vendidos = this.autos.filter (function (auto){
+         return (auto.vendido === true)
+      })
+      let lista = []
+      vendidos.forEach (function (auto){
+         lista.push(auto.precio)
+      })
+      return lista
+   },
+
+   totalDeVentas: function (){
+      let suma = 0
+      let ventasTotales = this.listaDeVentas ()
+      if (ventasTotales.length != 0)
+      suma = ventasTotales.reduce (function (acum, num){
+         acum + num;
+      });
+      return suma
+
+   },
+
+   puedeComprar: function (auto, persona){ 
+      let costoPorCuota = (auto.precio/ auto.cuotas)
+      return  (persona.capacidadDePagoTotal>auto.precio && persona.capacidadDePagoEnCuotas>costoPorCuota )
+      
+   },
+   
+
+   autosQuePuedeComprar: function (persona){
+      let aLaVenta = this.autosParaLaVenta ()
+      let paraVender = aLaVenta.fliter (auto=>this.puedeComprar (auto,persona))
+      return paraVender
+   }               
+   
+};
+                 
+console.log(concesionaria.puedeComprar());
+
